@@ -1,0 +1,22 @@
+CREATE TABLE IF NOT EXISTS audits (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    job_id CHAR(36) CHARACTER SET ascii COLLATE ascii_bin NOT NULL,
+    project_id VARCHAR(255) NOT NULL,
+    company_id VARCHAR(255) NOT NULL,
+    website_url TEXT NOT NULL,
+    job_status VARCHAR(32) NOT NULL DEFAULT 'queued',
+    created_at BIGINT UNSIGNED NOT NULL,
+    updated_at BIGINT UNSIGNED NOT NULL,
+    deleted_at BIGINT UNSIGNED NULL DEFAULT NULL,
+    started_at BIGINT UNSIGNED NULL,
+    finished_at BIGINT UNSIGNED NULL,
+    heartbeat_at BIGINT UNSIGNED NULL,
+    worker_id CHAR(36) NULL,
+    prompt_version VARCHAR(32) NULL,
+    response_id VARCHAR(255) NULL,
+    result_json LONGTEXT NULL,
+    error_code VARCHAR(128) NULL,
+    INDEX idx_audits_recovery (job_status, heartbeat_at),
+    UNIQUE INDEX uq_audits_job_id (job_id),
+    INDEX idx_audits_queue (job_status, deleted_at, created_at)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

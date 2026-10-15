@@ -1,0 +1,12 @@
+.env
+.venv/
+__pycache__/
+.pytest_cache/
+*.pyc
+.runtime/
+.environment.json
+.env.*
+!.env.example
+
+# macOS metadata
+.DS_Store

@@ -1,0 +1,7 @@
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+httpx>=0.27,<1
+pydantic-settings>=2.6,<3
+PyMySQL[rsa]>=1.1,<2
+jsonschema[format]>=4.23,<5
+supervisor>=4.2,<5

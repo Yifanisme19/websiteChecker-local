@@ -1,0 +1,219 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Web Checker delivery report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "generated_at",
+    "basic_info",
+    "checklist",
+    "issues_found"
+  ],
+  "properties": {
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "basic_info": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "company_website",
+        "company_name",
+        "ssm_registration_number",
+        "phone",
+        "whatsapp",
+        "email",
+        "address"
+      ],
+      "properties": {
+        "company_website": {
+          "type": "string",
+          "format": "uri",
+          "pattern": "^https?://[^\\s]+$"
+        },
+        "company_name": {
+          "type": "string"
+        },
+        "ssm_registration_number": {
+          "type": "string"
+        },
+        "phone": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "number"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "number": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "whatsapp": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "number"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "number": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "email": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "email"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "address": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "label",
+              "address"
+            ],
+            "properties": {
+              "label": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    "checklist": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "status",
+          "severity"
+        ],
+        "properties": {
+          "label": {
+            "type": "string",
+            "enum": [
+              "All Menu Button Links Correct",
+              "No Grammar Error",
+              "No Typo",
+              "Company Name Must Be Correct",
+              "Contact Details Must Be Correct",
+              "Footer Includes Powered by Newpages, Visitor and Year",
+              "At Least 10 Products/Services Uploaded",
+              "No Improper Picture Use (Unrelated Pictures or Other Brands’ Names)"
+            ]
+          },
+          "status": {
+            "type": "integer",
+            "enum": [
+              0,
+              1
+            ],
+            "description": "0 when confirmed reportable issues link to this row; 1 otherwise. Not a coverage certification."
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high"
+            ]
+          }
+        }
+      }
+    },
+    "issues_found": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "issue",
+          "pic",
+          "severity",
+          "page",
+          "problem",
+          "recommended_fix"
+        ],
+        "properties": {
+          "issue": {
+            "type": "string",
+            "pattern": "^#[0-9]{3,}$"
+          },
+          "pic": {
+            "type": "string",
+            "enum": [
+              "Designer",
+              "Content Strategist"
+            ]
+          },
+          "severity": {
+            "type": "string",
+            "enum": [
+              "high",
+              "medium",
+              "low"
+            ]
+          },
+          "page": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https?://[^\\s]+$"
+          },
+          "problem": {
+            "type": "string",
+            "minLength": 1
+          },
+          "recommended_fix": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    }
+  },
+  "description": "Findings-based v3: FAIL only for confirmed reportable linked issues; otherwise PASS. Coverage remains private."
+}

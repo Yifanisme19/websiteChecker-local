@@ -1,0 +1,16 @@
+#!/bin/sh
+set -eu
+base=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+case "${1:-}" in
+  local) target="$(dirname -- "$base")/websiteChecker-local" ;;
+  prod) target="$(dirname -- "$base")/websiteChecker" ;;
+  *) echo 'Usage: ./manage local|prod api start|stop|restart|status' >&2
+     echo '       ./manage local|prod workers start|scale --count N' >&2
+     echo '       ./manage local|prod workers status|stop' >&2
+     echo '       ./manage local|prod tokens migrate|create|import-legacy|list|revoke' >&2
+     echo '       ./manage local|prod status' >&2
+     echo '       ./manage prod update --version VERSION [--apply]' >&2
+     echo '       ./manage prod rollback --version VERSION [--apply]' >&2
+     exit 2 ;;
+esac
+exec "$target/.venv/bin/python" "$target/scripts/manage.py" "$@"
